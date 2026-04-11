@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(find /c/Users/educo/.claude/projects -name *.md)"
+    ]
+  }
+}
