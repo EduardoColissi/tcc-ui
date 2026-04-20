@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Zap } from 'lucide-react';
+import { GraduationCap } from 'lucide-react';
 import api from '@/lib/api';
 import { toastPromise, extractApiError } from '@/lib/toast';
 import { Button } from '@/components/ui/button';
@@ -47,17 +47,17 @@ export default function RegisterPage() {
       <div className="hidden lg:flex flex-col items-center justify-center gap-6 bg-primary px-12 text-primary-foreground">
         <div className="flex flex-col items-center gap-4 text-center">
           <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-foreground/10 ring-1 ring-primary-foreground/20">
-            <Zap size={32} />
+            <GraduationCap size={32} />
           </div>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">FlowDesk</h1>
+            <h1 className="text-3xl font-bold tracking-tight">Produtividade</h1>
             <p className="mt-1 text-primary-foreground/70 text-sm">
-              Produtividade para home office
+              Gestão de produtividade pessoal
             </p>
           </div>
         </div>
         <div className="grid grid-cols-1 gap-3 w-full max-w-xs">
-          {['Organize com Kanban', 'Foque com Pomodoro', 'Acompanhe seu progresso'].map((f) => (
+          {['Organize com Kanban', 'Foque com Pomodoro', 'Monitoramento de foco'].map((f) => (
             <div key={f} className="flex items-center gap-2 text-sm text-primary-foreground/80">
               <span className="h-1.5 w-1.5 rounded-full bg-primary-foreground/60" />
               {f}
@@ -71,7 +71,7 @@ export default function RegisterPage() {
         <div className="w-full max-w-sm space-y-8">
           <div className="flex justify-center lg:hidden">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary">
-              <Zap size={22} className="text-primary-foreground" />
+              <GraduationCap size={22} className="text-primary-foreground" />
             </div>
           </div>
 

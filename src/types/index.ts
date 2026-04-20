@@ -1,4 +1,3 @@
-export type WorkModel = 'ONSITE' | 'HYBRID' | 'HOME_OFFICE';
 export type TaskStatus = 'TODO' | 'IN_PROGRESS' | 'DONE';
 export type TaskPriority = 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT';
 export type TaskType = 'PROFESSIONAL' | 'PERSONAL';
@@ -10,10 +9,6 @@ export interface User {
   email: string;
   birthDate: string;
   emailVerified: boolean;
-  jobTitle: string | null;
-  workModel: WorkModel | null;
-  company: string | null;
-  onboardingComplete: boolean;
   createdAt: string;
   updatedAt: string;
 }

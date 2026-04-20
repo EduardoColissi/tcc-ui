@@ -9,23 +9,17 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 
 export default function SettingsPage() {
   const { data: user } = useMe();
   const qc = useQueryClient();
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({ name: '', jobTitle: '', company: '', workModel: '' });
+  const [form, setForm] = useState({ name: '' });
 
   useEffect(() => {
     if (user) {
-      setForm({
-        name: user.name,
-        jobTitle: user.jobTitle ?? '',
-        company: user.company ?? '',
-        workModel: user.workModel ?? '',
-      });
+      setForm({ name: user.name });
     }
   }, [user]);
 
@@ -73,26 +67,6 @@ export default function SettingsPage() {
             <div className="space-y-1.5">
               <Label className="text-sm">Nome</Label>
               <Input className="h-9" value={form.name} onChange={(e) => set('name', e.target.value)} required />
-            </div>
-            <Separator />
-            <div className="space-y-1.5">
-              <Label className="text-sm">Cargo</Label>
-              <Input className="h-9" placeholder="Ex: Desenvolvedor, Designer..." value={form.jobTitle} onChange={(e) => set('jobTitle', e.target.value)} />
-            </div>
-            <div className="space-y-1.5">
-              <Label className="text-sm">Empresa</Label>
-              <Input className="h-9" placeholder="Ex: UFRGS, Empresa LTDA..." value={form.company} onChange={(e) => set('company', e.target.value)} />
-            </div>
-            <div className="space-y-1.5">
-              <Label className="text-sm">Modelo de trabalho</Label>
-              <Select value={form.workModel ?? ''} onValueChange={(v) => set('workModel', (v as string) ?? '')}>
-                <SelectTrigger className="h-9"><SelectValue placeholder="Selecione..." /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="HOME_OFFICE">🏠 Home Office</SelectItem>
-                  <SelectItem value="HYBRID">🔀 Híbrido</SelectItem>
-                  <SelectItem value="ONSITE">🏢 Presencial</SelectItem>
-                </SelectContent>
-              </Select>
             </div>
             <div className="pt-1">
               <Button type="submit" size="sm" disabled={loading}>

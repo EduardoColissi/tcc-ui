@@ -133,6 +133,48 @@
   --sidebar-ring: oklch(0.68 0.17 264.2);
 }
 
+@keyframes shimmer-sweep {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+  }
+}
+
+.survey-cta {
+  position: relative;
+  overflow: hidden;
+}
+
+.survey-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 50%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    oklch(1 0 0 / 12%),
+    transparent
+  );
+  transform: translateX(-100%) skewX(-15deg);
+  pointer-events: none;
+}
+
+.survey-cta:hover::before {
+  animation: shimmer-sweep 0.75s ease-out;
+}
+
+.dark .survey-cta::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    oklch(1 0 0 / 8%),
+    transparent
+  );
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

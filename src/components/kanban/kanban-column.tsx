@@ -7,9 +7,9 @@ import { TaskCard } from './task-card';
 import type { Task, TaskStatus } from '@/types';
 
 const columnMeta: Record<TaskStatus, { label: string; accent: string; dot: string }> = {
-  TODO:        { label: 'A Fazer',      accent: 'border-t-slate-400',  dot: 'bg-slate-400' },
-  IN_PROGRESS: { label: 'Em Andamento', accent: 'border-t-primary',    dot: 'bg-primary' },
-  DONE:        { label: 'Concluído',    accent: 'border-t-green-500',  dot: 'bg-green-500' },
+  TODO: { label: 'A Fazer', accent: 'border-t-slate-400', dot: 'bg-slate-400' },
+  IN_PROGRESS: { label: 'Em Andamento', accent: 'border-t-primary', dot: 'bg-primary' },
+  DONE: { label: 'Concluído', accent: 'border-t-green-500', dot: 'bg-green-500' },
 };
 
 interface Props {

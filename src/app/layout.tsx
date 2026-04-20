@@ -8,8 +8,8 @@ const geist = Geist({ subsets: ['latin'], variable: '--font-geist' });
 const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono' });
 
 export const metadata: Metadata = {
-  title: 'FlowDesk — Kanban & Pomodoro',
-  description: 'Sistema de produtividade para home office',
+  title: 'Produtividade — Kanban & Pomodoro',
+  description: 'Sistema de gestão de produtividade pessoal',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

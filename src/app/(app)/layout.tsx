@@ -24,12 +24,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     }
   }, [isError, router]);
 
-  useEffect(() => {
-    if (user && !user.onboardingComplete) {
-      router.replace('/onboarding');
-    }
-  }, [user, router]);
-
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">

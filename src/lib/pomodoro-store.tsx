@@ -47,16 +47,21 @@ export interface PomodoroState {
   completedCycles: number;
   /** Which focus cycle we are currently in (1-based) */
   currentCycle: number;
+  /** Whether the current/last focus session has AI focus monitoring enabled */
+  monitoringEnabled: boolean;
+  /** Session id to show focus summary for after a focus phase ends */
+  lastFocusSessionId: number | null;
 }
 
 type Action =
-  | { type: 'START'; task: Task; sessionId: number; endTime: number }
+  | { type: 'START'; task: Task; sessionId: number; endTime: number; monitoringEnabled: boolean }
   | { type: 'PAUSE'; pausedRemaining: number }
   | { type: 'RESUME'; endTime: number }
   | { type: 'STOP' }
-  | { type: 'PHASE_COMPLETE' }
+  | { type: 'PHASE_COMPLETE'; lastFocusSessionId: number | null }
   | { type: 'START_BREAK'; sessionId: number; endTime: number; long: boolean }
   | { type: 'BREAK_COMPLETE' }
+  | { type: 'CLEAR_SUMMARY' }
   | { type: 'RESTORE'; state: PomodoroState };
 
 // ---------------------------------------------------------------------------
@@ -71,6 +76,8 @@ const INITIAL_STATE: PomodoroState = {
   pausedRemaining: null,
   completedCycles: 0,
   currentCycle: 1,
+  monitoringEnabled: false,
+  lastFocusSessionId: null,
 };
 
 function reducer(state: PomodoroState, action: Action): PomodoroState {
@@ -83,6 +90,8 @@ function reducer(state: PomodoroState, action: Action): PomodoroState {
         sessionId: action.sessionId,
         endTime: action.endTime,
         pausedRemaining: null,
+        monitoringEnabled: action.monitoringEnabled,
+        lastFocusSessionId: null,
       };
     case 'PAUSE':
       return { ...state, endTime: null, pausedRemaining: action.pausedRemaining };
@@ -91,7 +100,14 @@ function reducer(state: PomodoroState, action: Action): PomodoroState {
     case 'STOP':
       return { ...INITIAL_STATE };
     case 'PHASE_COMPLETE':
-      return { ...state, endTime: null, sessionId: null };
+      return {
+        ...state,
+        endTime: null,
+        sessionId: null,
+        lastFocusSessionId:
+          state.phase === 'focus' ? action.lastFocusSessionId : state.lastFocusSessionId,
+        monitoringEnabled: state.phase === 'focus' ? false : state.monitoringEnabled,
+      };
     case 'START_BREAK':
       return {
         ...state,
@@ -110,8 +126,11 @@ function reducer(state: PomodoroState, action: Action): PomodoroState {
         task: state.task,
         completedCycles: state.completedCycles,
         currentCycle: nextCycle,
+        lastFocusSessionId: state.lastFocusSessionId,
       };
     }
+    case 'CLEAR_SUMMARY':
+      return { ...state, lastFocusSessionId: null };
     case 'RESTORE':
       return action.state;
     default:
@@ -150,14 +169,19 @@ function hydrate(): PomodoroState | null {
 // Context
 // ---------------------------------------------------------------------------
 
+interface StartFocusOptions {
+  monitoringEnabled?: boolean;
+}
+
 interface ContextValue {
   state: PomodoroState;
   remaining: number; // seconds remaining in current phase
   isRunning: boolean;
-  startFocus: (task: Task) => Promise<void>;
+  startFocus: (task: Task, opts?: StartFocusOptions) => Promise<void>;
   pause: () => void;
   resume: () => void;
   stop: () => void;
+  clearLastFocusSummary: () => void;
 }
 
 const PomodoroContext = createContext<ContextValue | null>(null);
@@ -216,7 +240,7 @@ export function PomodoroProvider({ children }: { children: React.ReactNode }) {
     const s = stateRef.current;
     if (!s.sessionId || !s.task) return;
 
-    dispatch({ type: 'PHASE_COMPLETE' });
+    dispatch({ type: 'PHASE_COMPLETE', lastFocusSessionId: s.sessionId });
 
     const isFocus = s.phase === 'focus';
     const plannedSeconds = isFocus
@@ -273,8 +297,9 @@ export function PomodoroProvider({ children }: { children: React.ReactNode }) {
   // Actions
   // -------------------------------------------------------------------------
 
-  const startFocus = useCallback(async (task: Task) => {
+  const startFocus = useCallback(async (task: Task, opts?: StartFocusOptions) => {
     const s = stateRef.current;
+    const monitoringEnabled = opts?.monitoringEnabled ?? false;
     // Stop any running session first
     if (s.sessionId) {
       try {
@@ -287,12 +312,14 @@ export function PomodoroProvider({ children }: { children: React.ReactNode }) {
         taskId: task.id,
         type: 'FOCUS',
         cycleNumber: s.currentCycle,
+        monitoringEnabled,
       });
       dispatch({
         type: 'START',
         task,
         sessionId: data.data.id,
         endTime: Date.now() + FOCUS_SECONDS * 1000,
+        monitoringEnabled,
       });
     } catch {
       toastError('Erro ao iniciar sessão.', 'Verifique sua conexão e tente novamente.');
@@ -321,6 +348,10 @@ export function PomodoroProvider({ children }: { children: React.ReactNode }) {
     dispatch({ type: 'STOP' });
   }, []);
 
+  const clearLastFocusSummary = useCallback(() => {
+    dispatch({ type: 'CLEAR_SUMMARY' });
+  }, []);
+
   // -------------------------------------------------------------------------
   // Derived values
   // -------------------------------------------------------------------------
@@ -341,7 +372,18 @@ export function PomodoroProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <PomodoroContext.Provider value={{ state, remaining, isRunning, startFocus, pause, resume, stop }}>
+    <PomodoroContext.Provider
+      value={{
+        state,
+        remaining,
+        isRunning,
+        startFocus,
+        pause,
+        resume,
+        stop,
+        clearLastFocusSummary,
+      }}
+    >
       {children}
     </PomodoroContext.Provider>
   );

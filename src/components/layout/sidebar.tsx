@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { ListTodo, Kanban, Settings, LogOut, Timer, Zap } from 'lucide-react';
+import { ListTodo, Kanban, Settings, LogOut, Timer, GraduationCap, History, ClipboardPen } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { clearTokens } from '@/lib/auth';
 import api from '@/lib/api';
@@ -14,10 +14,11 @@ import { toastSuccess } from '@/lib/toast';
 import { usePomodoro } from '@/lib/pomodoro-store';
 
 const navItems = [
-  { href: '/dashboard', label: 'Lista de Tarefas', icon: ListTodo },
-  { href: '/kanban',    label: 'Kanban',           icon: Kanban },
-  { href: '/pomodoro',  label: 'Pomodoro',         icon: Timer },
-  { href: '/settings',  label: 'Configurações',    icon: Settings },
+  { href: '/dashboard',     label: 'Lista de Tarefas',  icon: ListTodo },
+  { href: '/kanban',        label: 'Kanban',            icon: Kanban },
+  { href: '/pomodoro',      label: 'Pomodoro',          icon: Timer },
+  { href: '/focus-history', label: 'Histórico de Foco', icon: History },
+  { href: '/settings',      label: 'Configurações',     icon: Settings },
 ];
 
 function MiniTimerBadge() {
@@ -68,9 +69,9 @@ export function Sidebar({ user }: { user: User }) {
       {/* Brand */}
       <div className="flex h-14 items-center gap-2.5 border-b border-border px-4">
         <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary">
-          <Zap size={14} className="text-primary-foreground" />
+          <GraduationCap size={14} className="text-primary-foreground" />
         </div>
-        <span className="text-sm font-semibold tracking-tight">FlowDesk</span>
+        <span className="text-sm font-semibold tracking-tight">Produtividade</span>
       </div>
 
       {/* Nav */}
@@ -101,6 +102,24 @@ export function Sidebar({ user }: { user: User }) {
           );
         })}
       </nav>
+
+      {/* Survey CTA */}
+      <div className="px-3 pb-3">
+        <a
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="survey-cta flex items-center gap-2.5 rounded-lg border border-primary/30 bg-primary/5 px-3 py-2.5 text-sm font-medium text-primary transition-colors hover:bg-primary/10"
+        >
+          <ClipboardPen size={16} className="shrink-0" />
+          <div className="flex-1 min-w-0">
+            <p className="leading-tight">Responder pesquisa</p>
+            <p className="text-[10px] font-normal text-primary/70 leading-tight mt-0.5">
+              Contribua com o TCC
+            </p>
+          </div>
+        </a>
+      </div>
 
       {/* Footer: user + theme + logout */}
       <div className="border-t border-border p-3 space-y-1">
