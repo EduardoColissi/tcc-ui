@@ -56,13 +56,16 @@ export default function RegisterPage() {
             </p>
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-3 w-full max-w-xs">
-          {['Organize com Kanban', 'Foque com Pomodoro', 'Monitoramento de foco'].map((f) => (
-            <div key={f} className="flex items-center gap-2 text-sm text-primary-foreground/80">
-              <span className="h-1.5 w-1.5 rounded-full bg-primary-foreground/60" />
-              {f}
-            </div>
-          ))}
+        <div className="w-full max-w-xs text-center space-y-1">
+          <p className="text-xs uppercase tracking-wider text-primary-foreground/60">
+            Trabalho de Conclusão de Curso
+          </p>
+          <p className="text-sm font-medium text-primary-foreground/90">
+            Eduardo Colissi Wiceskoski
+          </p>
+          <p className="text-xs text-primary-foreground/70">
+            Ciência da Computação
+          </p>
         </div>
       </div>
 
