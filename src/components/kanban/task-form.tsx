@@ -17,6 +17,18 @@ interface Props {
   loading?: boolean;
 }
 
+const priorityLabel: Record<string, string> = {
+  LOW: 'Baixa',
+  MEDIUM: 'Média',
+  HIGH: 'Alta',
+  URGENT: 'Urgente',
+};
+
+const typeLabel: Record<string, string> = {
+  PROFESSIONAL: 'Profissional',
+  PERSONAL: 'Pessoal',
+};
+
 export function TaskForm({ open, onClose, onSubmit, initial, loading }: Props) {
   const [form, setForm] = useState<Partial<Task>>(
     initial ?? { title: '', priority: 'MEDIUM', type: 'PROFESSIONAL' }
@@ -50,7 +62,11 @@ export function TaskForm({ open, onClose, onSubmit, initial, loading }: Props) {
             <div className="space-y-1">
               <Label>Prioridade</Label>
               <Select value={form.priority} onValueChange={(v) => set('priority', v as string)}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione">
+                    {form.priority ? priorityLabel[form.priority] : null}
+                  </SelectValue>
+                </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="LOW">Baixa</SelectItem>
                   <SelectItem value="MEDIUM">Média</SelectItem>
@@ -62,7 +78,11 @@ export function TaskForm({ open, onClose, onSubmit, initial, loading }: Props) {
             <div className="space-y-1">
               <Label>Tipo</Label>
               <Select value={form.type} onValueChange={(v) => set('type', v as string)}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione">
+                    {form.type ? typeLabel[form.type] : null}
+                  </SelectValue>
+                </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="PROFESSIONAL">Profissional</SelectItem>
                   <SelectItem value="PERSONAL">Pessoal</SelectItem>
