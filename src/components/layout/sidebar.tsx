@@ -106,7 +106,7 @@ export function Sidebar({ user }: { user: User }) {
       {/* Survey CTA */}
       <div className="px-3 pb-3">
         <a
-          href="#"
+          href="https://forms.gle/5PCPyRpAfy5xKtRU7"
           target="_blank"
           rel="noopener noreferrer"
           className="survey-cta flex items-center gap-2.5 rounded-lg border border-primary/30 bg-primary/5 px-3 py-2.5 text-sm font-medium text-primary transition-colors hover:bg-primary/10"
