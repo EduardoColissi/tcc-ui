@@ -102,6 +102,19 @@ export function StartFocusDialog({
             </div>
           </button>
 
+          {monitoring && (
+            <div className="rounded-md border border-amber-200 bg-amber-50 dark:border-amber-900 dark:bg-amber-950/30 px-3 py-2 space-y-1">
+              <p className="text-xs font-medium text-amber-800 dark:text-amber-400">
+                Dicas para melhor detecção
+              </p>
+              <ul className="text-xs text-amber-700 dark:text-amber-500 space-y-0.5 list-disc list-inside">
+                <li>Prefira um fundo limpo, sem muitos objetos ao redor</li>
+                <li>Mantenha o ambiente bem iluminado</li>
+                <li>A IA pode cometer erros — distrações pontuais podem ser ignoradas</li>
+              </ul>
+            </div>
+          )}
+
           <p className="text-xs text-muted-foreground">
             Desative se esta tarefa não exige que você fique no computador.
           </p>
