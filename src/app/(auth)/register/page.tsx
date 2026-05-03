@@ -52,7 +52,7 @@ export default function RegisterPage() {
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Produtividade</h1>
             <p className="mt-1 text-primary-foreground/70 text-sm">
-              Gestão de produtividade pessoal
+              Gestão de produtividade profissional e pessoal
             </p>
           </div>
         </div>
