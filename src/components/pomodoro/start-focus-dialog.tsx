@@ -110,7 +110,7 @@ export function StartFocusDialog({
               <ul className="text-xs text-amber-700 dark:text-amber-500 space-y-0.5 list-disc list-inside">
                 <li>Prefira um fundo limpo, sem muitos objetos ao redor</li>
                 <li>Mantenha o ambiente bem iluminado</li>
-                <li>A IA pode cometer erros — distrações pontuais podem ser ignoradas</li>
+                <li>A IA pode cometer erros, distrações podem ser ignoradas ou detectadas erroneamente</li>
               </ul>
             </div>
           )}
