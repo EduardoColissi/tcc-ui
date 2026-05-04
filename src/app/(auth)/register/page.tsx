@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { GraduationCap } from 'lucide-react';
 import api from '@/lib/api';
+import { setTokens } from '@/lib/auth';
 import { toastPromise, extractApiError } from '@/lib/toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -23,17 +24,19 @@ export default function RegisterPage() {
     e.preventDefault();
     setLoading(true);
 
-    const promise = api.post('/auth/register', form);
+    const promise = api.post('/auth/register', form).then(({ data }) => {
+      setTokens(data.data.accessToken, data.data.refreshToken);
+    });
 
     toastPromise(promise, {
       loading: 'Criando sua conta...',
-      success: 'Cadastro realizado! Verifique seu e-mail para confirmar a conta.',
+      success: 'Conta criada! Redirecionando...',
       error: (err) => extractApiError(err, 'Erro ao criar conta. Tente novamente.'),
     });
 
     try {
       await promise;
-      router.push('/login');
+      router.push('/dashboard');
     } catch {
       // handled by toastPromise
     } finally {
