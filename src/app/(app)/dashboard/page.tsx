@@ -58,10 +58,10 @@ export default function TaskListPage() {
   const activeTasks = sortTasksByPriority(tasks.filter((t) => t.status !== 'DONE'));
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 sm:space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight">Lista de Tarefas</h1>
+          <h1 className="text-lg sm:text-xl font-semibold tracking-tight">Lista de Tarefas</h1>
           {!isLoading && (
             <p className="text-sm text-muted-foreground mt-0.5">
               {activeTasks.length} tarefa{activeTasks.length !== 1 ? 's' : ''} ativa{activeTasks.length !== 1 ? 's' : ''}
@@ -70,7 +70,7 @@ export default function TaskListPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-3">
         {/* Task list */}
         <div className="lg:col-span-2 space-y-3">
           {isLoading && <TaskListSkeleton />}
@@ -95,7 +95,7 @@ export default function TaskListPage() {
 
           {activeTasks.map((task) => (
             <Card key={task.id} className="group transition-shadow hover:shadow-sm">
-              <CardContent className="flex items-center gap-4 py-3">
+              <CardContent className="flex items-center gap-3 sm:gap-4 py-3">
                 {/* Priority color stripe */}
                 <div
                   className={`h-8 w-1 rounded-full shrink-0 ${
@@ -121,11 +121,12 @@ export default function TaskListPage() {
                 <Button
                   size="sm"
                   variant="outline"
-                  className="shrink-0 gap-1.5 opacity-70 group-hover:opacity-100 transition-opacity"
+                  className="shrink-0 gap-1.5 opacity-100 sm:opacity-70 sm:group-hover:opacity-100 transition-opacity"
                   onClick={() => router.push(`/pomodoro?taskId=${task.id}`)}
+                  aria-label="Focar nesta tarefa"
                 >
                   <Timer size={13} />
-                  Focar
+                  <span className="hidden sm:inline">Focar</span>
                 </Button>
               </CardContent>
             </Card>

@@ -73,8 +73,8 @@ export default function RegisterPage() {
       </div>
 
       {/* Form panel */}
-      <div className="flex items-center justify-center bg-background px-6 py-12">
-        <div className="w-full max-w-sm space-y-8">
+      <div className="flex items-center justify-center bg-background px-4 py-8 sm:px-6 sm:py-12">
+        <div className="w-full max-w-sm space-y-6 sm:space-y-8">
           <div className="flex justify-center lg:hidden">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary">
               <GraduationCap size={22} className="text-primary-foreground" />

@@ -83,15 +83,17 @@ export function KanbanBoard() {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-semibold tracking-tight">Quadro Kanban</h1>
+      <div className="mb-5 sm:mb-6 flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <h1 className="text-lg sm:text-xl font-semibold tracking-tight">Quadro Kanban</h1>
           <p className="text-sm text-muted-foreground mt-0.5">
             {tasks.length} tarefa{tasks.length !== 1 ? 's' : ''} no total
           </p>
         </div>
-        <Button size="sm" onClick={() => setFormOpen(true)} className="gap-1.5">
-          <Plus size={14} /> Nova tarefa
+        <Button size="sm" onClick={() => setFormOpen(true)} className="shrink-0 gap-1.5">
+          <Plus size={14} />
+          <span className="hidden sm:inline">Nova tarefa</span>
+          <span className="sm:hidden">Nova</span>
         </Button>
       </div>
 

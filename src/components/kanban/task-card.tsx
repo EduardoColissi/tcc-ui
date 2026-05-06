@@ -88,32 +88,35 @@ export function TaskCard({ task, onEdit, onDelete, onOpen }: Props) {
           </div>
         </div>
 
-        {/* Actions — visible on hover */}
-        <div className="flex flex-col gap-0.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+        {/* Actions — always visible on touch, fade in on hover for desktop */}
+        <div className="flex flex-col gap-0.5 shrink-0 opacity-100 transition-opacity md:opacity-0 md:group-hover:opacity-100">
           <Button
             variant="ghost"
             size="icon"
-            className="h-6 w-6 text-muted-foreground hover:text-primary"
+            className="h-7 w-7 md:h-6 md:w-6 text-muted-foreground hover:text-primary"
             title="Iniciar Pomodoro"
+            aria-label="Iniciar Pomodoro"
             onClick={(e) => { e.stopPropagation(); router.push(`/pomodoro?taskId=${task.id}`); }}
           >
-            <Timer size={12} />
+            <Timer size={13} />
           </Button>
           <Button
             variant="ghost"
             size="icon"
-            className="h-6 w-6 text-muted-foreground hover:text-foreground"
+            className="h-7 w-7 md:h-6 md:w-6 text-muted-foreground hover:text-foreground"
+            aria-label="Editar tarefa"
             onClick={(e) => { e.stopPropagation(); onEdit(task); }}
           >
-            <Pencil size={12} />
+            <Pencil size={13} />
           </Button>
           <Button
             variant="ghost"
             size="icon"
-            className="h-6 w-6 text-muted-foreground hover:text-destructive"
+            className="h-7 w-7 md:h-6 md:w-6 text-muted-foreground hover:text-destructive"
+            aria-label="Remover tarefa"
             onClick={(e) => { e.stopPropagation(); onDelete(task.id); }}
           >
-            <Trash2 size={12} />
+            <Trash2 size={13} />
           </Button>
         </div>
       </div>

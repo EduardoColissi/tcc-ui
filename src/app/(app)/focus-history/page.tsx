@@ -198,9 +198,9 @@ export default function FocusHistoryPage() {
   }, [sessions]);
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6 pt-2">
+    <div className="mx-auto max-w-3xl space-y-5 sm:space-y-6 pt-1 sm:pt-2">
       <div>
-        <h1 className="text-xl font-semibold tracking-tight flex items-center gap-2">
+        <h1 className="text-lg sm:text-xl font-semibold tracking-tight flex items-center gap-2">
           <History size={18} className="text-primary" />
           Histórico de Foco
         </h1>

@@ -51,9 +51,9 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="space-y-6 max-w-lg">
+    <div className="space-y-5 sm:space-y-6 max-w-lg">
       <div>
-        <h1 className="text-xl font-semibold tracking-tight">Configurações</h1>
+        <h1 className="text-lg sm:text-xl font-semibold tracking-tight">Configurações</h1>
         <p className="text-sm text-muted-foreground mt-0.5">Gerencie seu perfil e preferências</p>
       </div>
 
@@ -82,13 +82,13 @@ export default function SettingsPage() {
           <CardTitle className="text-base">Conta</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">E-mail</span>
-            <span className="font-medium">{user?.email}</span>
+          <div className="flex items-center justify-between gap-3 text-sm">
+            <span className="text-muted-foreground shrink-0">E-mail</span>
+            <span className="font-medium truncate">{user?.email}</span>
           </div>
           <Separator />
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">Membro desde</span>
+          <div className="flex items-center justify-between gap-3 text-sm">
+            <span className="text-muted-foreground shrink-0">Membro desde</span>
             <span className="font-medium">{user ? new Date(user.createdAt).toLocaleDateString('pt-BR') : ''}</span>
           </div>
         </CardContent>

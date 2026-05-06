@@ -88,6 +88,23 @@ export default function PomodoroPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  // Responsive ring size (shrinks on very small screens)
+  const [ringSize, setRingSize] = useState(240);
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const computeSize = () => {
+      const w = window.innerWidth;
+      // Padding budget: 32px (p-4) on each side at sm and below
+      if (w < 360) return 200;
+      if (w < 480) return 220;
+      return 240;
+    };
+    const update = () => setRingSize(computeSize());
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
   const focusMonitor = useFocusMonitor({
     sessionId: state.sessionId,
     enabled: state.monitoringEnabled && state.phase === 'focus' && !isPaused,
@@ -145,8 +162,8 @@ export default function PomodoroPage() {
   const total = phaseTotal(phase);
   const progress = phase !== 'idle' ? ((total - remaining) / total) * 100 : 0;
 
-  // SVG ring (large)
-  const size = 240;
+  // SVG ring (large, responsive)
+  const size = ringSize;
   const strokeWidth = 12;
   const r = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * r;
@@ -159,9 +176,9 @@ export default function PomodoroPage() {
   }
 
   return (
-    <div className="mx-auto max-w-lg space-y-6 pt-2">
+    <div className="mx-auto max-w-lg space-y-5 sm:space-y-6 pt-1 sm:pt-2">
       <div>
-        <h1 className="text-xl font-semibold tracking-tight">Pomodoro</h1>
+        <h1 className="text-lg sm:text-xl font-semibold tracking-tight">Pomodoro</h1>
         <p className="text-sm text-muted-foreground mt-0.5">
           Foque em uma tarefa por vez. 25 min de foco, 5 min de pausa.
         </p>
@@ -285,7 +302,7 @@ export default function PomodoroPage() {
             />
           </svg>
           <div className="absolute flex flex-col items-center gap-1.5">
-            <span className="text-5xl font-mono font-bold tabular-nums tracking-tighter">
+            <span className="text-4xl sm:text-5xl font-mono font-bold tabular-nums tracking-tighter">
               {formatDuration(remaining)}
             </span>
             <span className={cn('text-xs font-semibold uppercase tracking-widest', PHASE_COLORS[phase])}>
@@ -300,13 +317,13 @@ export default function PomodoroPage() {
         </div>
 
         {/* Controls */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 w-full">
           {phase === 'idle' ? (
             <Button
               size="lg"
               disabled={!displayTask}
               onClick={() => displayTask && setShowStartDialog(true)}
-              className="px-8"
+              className="px-6 sm:px-8"
             >
               <Play size={16} className="mr-2" /> Iniciar foco
             </Button>
